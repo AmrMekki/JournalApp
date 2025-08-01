@@ -1,0 +1,43 @@
+## Build artifacts
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Rider
+.idea/
+
+## VS Code
+.vscode/
+
+## ASP.NET Core secrets
+**/secrets.json
+
+## Logs
+*.log
+
+## System files
+.DS_Store
+Thumbs.db
+
+## Database (if we use EF later)
+*.db
+
+## App Data
+App_Data/journal.json
+
+## Others
+*.pidb
+*.svd
+
+# Dotnet watch
+**/*.hotreload
+
+## OS-generated files
+ehthumbs.db
+Icon?

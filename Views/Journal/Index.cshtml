@@ -1,0 +1,18 @@
+@model List<JournalApp.Models.JournalEntry>
+@{
+    ViewData["Title"] = "My Journal";
+}
+
+<h1>📓 My Journal</h1>
+<a class="btn btn-primary mb-3" href="/Journal/Create">+ New Entry</a>
+
+@foreach (var entry in Model)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@entry.Title (@entry.Mood)</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@entry.Date.ToString("f")</h6>
+            <p class="card-text">@entry.Content</p>
+        </div>
+    </div>
+}
