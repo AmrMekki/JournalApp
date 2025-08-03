@@ -3,26 +3,90 @@
     ViewData["Title"] = "New Journal Entry";
 }
 
-<h1>📝 New Entry</h1>
+<h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">📝 New Entry</h1>
 
-<form asp-action="Create" method="post">
-    <div class="mb-3">
-        <label asp-for="Title" class="form-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+<form asp-action="Create" method="post" class="space-y-6" id="entryForm">
+    <!-- Title -->
+    <div>
+        <label asp-for="Title" class="block text-sm font-medium text-gray-700 dark:text-gray-300"></label>
+        <input asp-for="Title" class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white" />
+        <span asp-validation-for="Title" class="text-red-500 text-sm"></span>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Content" class="form-label"></label>
-        <textarea asp-for="Content" class="form-control"></textarea>
-        <span asp-validation-for="Content" class="text-danger"></span>
+    <!-- Content with character count -->
+    <div>
+        <label asp-for="Content" class="block text-sm font-medium text-gray-700 dark:text-gray-300"></label>
+        <textarea asp-for="Content" rows="5" id="ContentInput" class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"></textarea>
+        <div class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+            <span id="charCount">0</span> characters
+        </div>
+        <span asp-validation-for="Content" class="text-red-500 text-sm"></span>
     </div>
 
-    <div class="mb-3">
-        <label asp-for="Mood" class="form-label">Mood (Emoji)</label>
-        <input asp-for="Mood" class="form-control" value="🙂" />
-        <span asp-validation-for="Mood" class="text-danger"></span>
+    <!-- Mood with emoji picker -->
+    <div>
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Mood (Emoji)</label>
+        <div class="flex items-center gap-3">
+            <input asp-for="Mood" id="MoodInput" class="mt-1 block w-full max-w-xs px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white" />
+            <button type="button" id="emojiBtn" class="px-3 py-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600">😀</button>
+        </div>
+        <span asp-validation-for="Mood" class="text-red-500 text-sm"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">Save Entry</button>
+    <!-- Tags with pills -->
+    <div>
+        <label asp-for="TagsInput" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tags (comma-separated)</label>
+        <input asp-for="TagsInput" id="TagsInput" class="mt-1 block w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white" />
+        <span asp-validation-for="TagsInput" class="text-red-500 text-sm"></span>
+        <div id="tagPreview" class="mt-2 flex flex-wrap gap-2"></div>
+    </div>
+
+    <!-- Submit -->
+    <div>
+        <button type="submit" class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md shadow transition-colors duration-200">
+            💾 Save Entry
+        </button>
+    </div>
 </form>
+
+
+<script>
+    // Character Count for Content
+    const contentInput = document.getElementById('ContentInput');
+    const charCount = document.getElementById('charCount');
+    contentInput?.addEventListener('input', () => {
+        charCount.textContent = contentInput.value.length;
+    });
+
+    // Emoji Picker
+    document.getElementById('emojiBtn')?.addEventListener('click', () => {
+        const emojis = ['😀', '😅', '😊', '😢', '😡', '😴', '🥳', '😎', '😍'];
+        const picker = document.createElement('div');
+        picker.className = 'absolute bg-white dark:bg-gray-800 border p-2 rounded shadow flex gap-1 flex-wrap z-50';
+        emojis.forEach(e => {
+            const btn = document.createElement('button');
+            btn.textContent = e;
+            btn.className = 'text-2xl hover:scale-125 transition';
+            btn.onclick = () => {
+                document.getElementById('MoodInput').value = e;
+                picker.remove();
+            };
+            picker.appendChild(btn);
+        });
+        document.getElementById('emojiBtn').after(picker);
+    });
+
+    // Tag Preview
+    const tagInput = document.getElementById('TagsInput');
+    const tagPreview = document.getElementById('tagPreview');
+    tagInput?.addEventListener('input', () => {
+        const tags = tagInput.value.split(',').map(t => t.trim()).filter(Boolean);
+        tagPreview.innerHTML = '';
+        tags.forEach(tag => {
+            const span = document.createElement('span');
+            span.className = 'bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm';
+            span.textContent = `#${tag}`;
+            tagPreview.appendChild(span);
+        });
+    });
+</script>

@@ -1,0 +1,36 @@
+@model JournalApp.Models.JournalEntry
+
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">✏️ Edit Entry</h2>
+
+<form asp-action="Edit" method="post" class="space-y-6 bg-white dark:bg-gray-900 p-6 rounded-md shadow">
+    <!-- Hidden field to track the ID -->
+    <input type="hidden" asp-for="Id" />
+
+    <!-- Title -->
+    <div>
+        <label asp-for="Title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title</label>
+        <input asp-for="Title" class="w-full border border-gray-300 dark:border-gray-600 rounded px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <span asp-validation-for="Title" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Content -->
+    <div>
+        <label asp-for="Content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
+        <textarea asp-for="Content" rows="5" class="w-full border border-gray-300 dark:border-gray-600 rounded px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        <span asp-validation-for="Content" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Mood -->
+    <div>
+        <label asp-for="Mood" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mood (Emoji)</label>
+        <input asp-for="Mood" class="w-20 border border-gray-300 dark:border-gray-600 rounded px-4 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <span asp-validation-for="Mood" class="text-red-500 text-sm"></span>
+    </div>
+
+    <!-- Submit -->
+    <div>
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors">
+            💾 Save Changes
+        </button>
+    </div>
+</form>

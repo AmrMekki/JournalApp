@@ -1,0 +1,24 @@
+@model JournalApp.Models.JournalEntry
+
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">🗑️ Delete Entry</h2>
+
+<p class="text-gray-700 dark:text-gray-300 mb-4">
+    Are you sure you want to delete this entry?
+</p>
+
+<div class="border border-gray-300 dark:border-gray-600 p-4 rounded-md bg-white dark:bg-gray-800 mb-6">
+    <strong class="block text-lg text-gray-900 dark:text-white">@Model.Title</strong>
+    <p class="text-gray-700 dark:text-gray-300">@Model.Content</p>
+</div>
+
+<form asp-action="Delete" method="post" class="flex flex-col sm:flex-row gap-4">
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors">
+        ✅ Yes, delete
+    </button>
+
+    <a asp-action="Index" class="bg-gray-300 dark:bg-gray-700 text-gray-800 dark:text-white px-4 py-2 rounded hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors">
+        ❌ Cancel
+    </a>
+</form>

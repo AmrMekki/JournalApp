@@ -16,14 +16,19 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseStaticFiles(); // Needed to serve wwwroot assets
+
 app.UseAuthorization();
 
-app.MapStaticAssets();
+// app.MapStaticAssets();
 
+// app.MapControllerRoute(
+//     name: "default",
+//     pattern: "{controller=Journal}/{action=Index}/{id?}")
+//     .WithStaticAssets();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Journal}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Journal}/{action=Index}/{id?}");
 
 
 app.Run();
